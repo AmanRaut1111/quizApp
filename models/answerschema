@@ -1,0 +1,40 @@
+const mongoose = require('mongoose')
+
+
+const answerSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+
+    quizName: {
+        type: String,
+        required: true
+    },
+
+    questionId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    givenAnswer: {
+        type: String,
+        required: true
+    },
+    score: {
+        type: String,
+        default: 0
+    },
+
+    answerOn: {
+        type: Date,
+        default: new Date()
+    },
+
+    updateOn: {
+        type: Date,
+        default: new Date()
+    },
+
+})
+
+module.exports = mongoose.model('answer', answerSchema)
