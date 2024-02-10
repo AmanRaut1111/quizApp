@@ -20,10 +20,7 @@ const answerSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    score: {
-        type: String,
-        default: 0
-    },
+   
 
     answerOn: {
         type: Date,
