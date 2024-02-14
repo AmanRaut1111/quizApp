@@ -1,6 +1,6 @@
-const { default: mongoose, Mongoose } = require("mongoose");
-const answerschema = require("../models/answerschema");
-const answerModel = require("../models/answerschema");
+
+
+const answerModel = require("../models/answer");
 
 const submitAnswer = async (req, res) => {
     try {
@@ -47,7 +47,7 @@ const submitAnswer = async (req, res) => {
 const getUserQuiz = async (req, res) => {
     try {
         const { userId, quizName } = req.query;
-        const data = await answerschema.aggregate([
+        const data = await answerModel.aggregate([
             {
                 $match: {
                     userId: new mongoose.Types.ObjectId(userId),
