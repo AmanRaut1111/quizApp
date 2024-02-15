@@ -1,5 +1,7 @@
 const adminModel = require('../models/admin');
-const passwordhelper = require('../helpers/password')
+const passwordhelper = require('../helpers/password');
+require("dotenv").config();
+const jwt = require('jsonwebtoken');
 
 
 
@@ -15,8 +17,10 @@ const registerAdmin = async (req, res) => {
         })
 
         const data = await admindata.save();
+
+        const token = jwt.sign({ _id: data._id }, process.env.SECRET_KEY, { expiresIn: "1y" })
         if (data) {
-            res.status(200).json({ message: "Admin added sucesssfully...!", status: 200, statsuCode: 200, data: data })
+            res.status(200).json({ message: "Admin added sucesssfully...!", status: 200, statsuCode: 200, data: data, token: token })
         } else {
             res.status(400).json({ message: "Something Went Wrong...!", status: false, statusCode: 400 })
         }
