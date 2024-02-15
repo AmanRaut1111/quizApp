@@ -16,33 +16,27 @@ const regUser = async (req, res) => {
         const data = await userData.save();
 
         if (data) {
-            res
-                .status(200)
-                .json({
-                    message: "User  is Registered Sucessfully...!",
-                    status: true,
-                    statusCode: 200,
-                    data: data,
-                    token: token,
-                });
+            res.status(200).json({
+                message: "User  is Registered Sucessfully...!",
+                status: true,
+                statusCode: 200,
+                data: data,
+                token: token,
+            });
         } else {
-            res
-                .status(400)
-                .json({
-                    message: "Something Went Wrong..!",
-                    status: false,
-                    statusCode: 400,
-                });
+            res.status(400).json({
+                message: "Something Went Wrong..!",
+                status: false,
+                statusCode: 400,
+            });
         }
     } catch (error) {
         console.log(error);
-        res
-            .status(500)
-            .json({
-                message: "Something Went Wrong..!",
-                status: false,
-                statusCode: 500,
-            });
+        res.status(500).json({
+            message: "Something Went Wrong..!",
+            status: false,
+            statusCode: 500,
+        });
     }
 };
 
@@ -57,21 +51,17 @@ const login = async (req, res) => {
                     checkUser.password
                 );
                 if (matchpassword) {
-                    res
-                        .status(200)
-                        .json({
-                            message: "User login Sucessfully..!",
-                            status: true,
-                            statusCode: 200,
-                        });
+                    res.status(200).json({
+                        message: "User login Sucessfully..!",
+                        status: true,
+                        statusCode: 200,
+                    });
                 } else {
-                    res
-                        .status(400)
-                        .json({
-                            message: "Password does not Match..!",
-                            status: false,
-                            statusCode: 400,
-                        });
+                    res.status(400).json({
+                        message: "Password does not Match..!",
+                        status: false,
+                        statusCode: 400,
+                    });
                 }
             } else {
                 res
@@ -79,23 +69,19 @@ const login = async (req, res) => {
                     .json({ mesage: "User is Not Found", status: false, statuCode: 400 });
             }
         } else {
-            res
-                .status(400)
-                .json({
-                    message: "Something Went Wrong...!",
-                    status: false,
-                    statuCode: 400,
-                });
+            res.status(400).json({
+                message: "Something Went Wrong...!",
+                status: false,
+                statuCode: 400,
+            });
         }
     } catch (error) {
         console.log(error);
-        res
-            .status(500)
-            .json({
-                message: "Something Went Wrong...!",
-                status: false,
-                statuCode: 500,
-            });
+        res.status(500).json({
+            message: "Something Went Wrong...!",
+            status: false,
+            statuCode: 500,
+        });
     }
 };
 

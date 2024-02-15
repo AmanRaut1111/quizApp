@@ -10,6 +10,17 @@ const hash = (password) => {
             resolve(val)
         })
     })
+};
+
+const passwordCompare = (password1, password2) => {
+
+    return new Promise((resolve, reject) => {
+
+        bcrypt.compare(password1, password2, (error, value) => {
+            if (error) return reject(error)
+            resolve(value)
+        })
+    })
 }
 
 
@@ -17,5 +28,5 @@ const hash = (password) => {
 
 
 module.exports = {
-    hash
+    hash, passwordCompare
 }
