@@ -6,7 +6,7 @@ const adminSchema = mongoose.Schema({
         required: true,
     },
 
-    phone: {
+    phoneNo: {
         type: Number,
         required: true,
     },
