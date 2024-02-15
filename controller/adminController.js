@@ -1,4 +1,5 @@
 const adminModel = require('../models/admin');
+const passwordhelper = require('../helpers/password')
 
 
 
@@ -10,7 +11,7 @@ const registerAdmin = async (req, res) => {
         const admindata = await adminModel({
             userName: userName,
             phoneNo: phoneNo,
-            password: password
+            password: await passwordhelper.hash(password)
         })
 
         const data = await admindata.save();
