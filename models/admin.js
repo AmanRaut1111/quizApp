@@ -15,6 +15,13 @@ const adminSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+
+
+
+    upadtedOn: {
+        type: Date,
+        default: new Date()
+    }
 });
 
 module.exports = mongoose.model("admin", adminSchema);
