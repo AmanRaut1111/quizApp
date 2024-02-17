@@ -4,7 +4,6 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
-
 const regUser = async (req, res) => {
     try {
         const { userName, email, password, phoneNo } = req.body;
@@ -15,7 +14,9 @@ const regUser = async (req, res) => {
             password: hash,
             phoneNo: phoneNo,
         });
-        const token = jwt.sign({ _id: userData._id }, process.env.SECRET_KEY, { expiresIn: process.env.expiresIn });
+        const token = jwt.sign({ _id: userData._id }, process.env.SECRET_KEY, {
+            expiresIn: process.env.expiresIn,
+        });
         const data = await userData.save();
 
         if (data) {
@@ -88,21 +89,17 @@ const login = async (req, res) => {
     }
 };
 
-
 const forgotPassword = async (req, res) => {
-
-
     try {
-
-        const { id } = req.params
-        const findUser = await userModel.findById(id)
+        const { id } = req.params;
+        const findUser = await userModel.findById(id);
 
         if (findUser) {
             const transporter = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
                     user: process.env.user,
-                    pass: process.env.pass
+                    pass: process.env.pass,
                 },
             });
 
@@ -110,28 +107,43 @@ const forgotPassword = async (req, res) => {
                 from: process.env.from,
                 to: findUser.email,
                 subject: "passsword update",
-                html: '<p>Click  below link  for update the password  <br><br> <link> http://localhost:3000/recoverpassword <link/> </p>'
-
-
+                html: "<p>Click  below link  for update the password  <br><br> <link> http://localhost:3000/recoverpassword <link/> </p>",
             };
 
             const mailData = await transporter.sendMail(mailoption);
             if (mailData) {
-                res.status(200).json({ message: "Mail Send Sucessfully to  your registered Email Address,please check...!", status: true, statusCode: 200 })
+                res
+                    .status(200)
+                    .json({
+                        message:
+                            "Mail Send Sucessfully to  your registered Email Address,please check...!",
+                        status: true,
+                        statusCode: 200,
+                    });
             } else {
-
-
-                res.status(400).json({ mesage: "Something Went Wrong", status: false, statusCode: 400 })
+                res
+                    .status(400)
+                    .json({
+                        mesage: "Something Went Wrong",
+                        status: false,
+                        statusCode: 400,
+                    });
             }
-
         } else {
-            res.status(401).json({ message: "This Email is Not Found...please Try Again...!", status: false, statusCode: 401 })
+            res
+                .status(401)
+                .json({
+                    message: "This Email is Not Found...please Try Again...!",
+                    status: false,
+                    statusCode: 401,
+                });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ mesage: "Something Went Wrong", status: false, statusCode: 500 })
+        res
+            .status(500)
+            .json({ mesage: "Something Went Wrong", status: false, statusCode: 500 });
     }
-}
-
+};
 
 module.exports = { regUser, login, forgotPassword };
