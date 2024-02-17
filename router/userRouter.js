@@ -1,10 +1,11 @@
 const express = require("express");
-const { regUser, login } = require("../controller/userController");
+const { regUser, login, forgotPassword } = require("../controller/userController");
 const isValidToken = require("../middleware/auth");
 
 const userRouter = express.Router();
 
 userRouter.post("/register", regUser);
 userRouter.post("/login", isValidToken, login);
+userRouter.post('/forgotPassword/:id', forgotPassword)
 
 module.exports = userRouter;
