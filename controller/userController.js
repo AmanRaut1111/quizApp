@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user");
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const regUser = async (req, res) => {
@@ -12,7 +13,7 @@ const regUser = async (req, res) => {
             password: hash,
             phoneNo: phoneNo,
         });
-        const token = jwt.sign({ id: userData._id }, "Aman", { expiresIn: "1y" });
+        const token = jwt.sign({ _id: userData._id }, process.env.SECRET_KEY, { expiresIn: process.env.expiresIn });
         const data = await userData.save();
 
         if (data) {

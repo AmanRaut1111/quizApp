@@ -18,7 +18,7 @@ const registerAdmin = async (req, res) => {
 
         const data = await admindata.save();
 
-        const token = jwt.sign({ _id: data._id }, process.env.SECRET_KEY, { expiresIn: "1y" })
+        const token = jwt.sign({ _id: data._id }, process.env.SECRET_KEY, { expiresIn: process.env.expiresIn })
         if (data) {
             res.status(200).json({ message: "Admin added sucesssfully...!", status: 200, statsuCode: 200, data: data, token: token })
         } else {
