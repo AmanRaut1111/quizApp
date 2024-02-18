@@ -155,7 +155,7 @@ const updatePassword = async (req, res) => {
         if (userData) {
             res.status(200).json({ message: "Password Updated Sucessfully...!", sttaus: true, statusCode: 200 })
         } else {
-            res.status(400).json({ mesage: "Something Went wrong..!", status: false, statuCode: 400 })
+            res.status(400).json({ mesage: "Something Went Wrong..!", status: false, statuCode: 400 })
         }
     } catch (error) {
         console.log(error);
