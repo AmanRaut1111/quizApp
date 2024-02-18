@@ -3,6 +3,7 @@ const userModel = require("../models/user");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const hashpassword = require('../helpers/password')
 
 const regUser = async (req, res) => {
     try {
@@ -112,31 +113,25 @@ const forgotPassword = async (req, res) => {
 
             const mailData = await transporter.sendMail(mailoption);
             if (mailData) {
-                res
-                    .status(200)
-                    .json({
-                        message:
-                            "Mail Send Sucessfully to  your registered Email Address,please check...!",
-                        status: true,
-                        statusCode: 200,
-                    });
+                res.status(200).json({
+                    message:
+                        "Mail Send Sucessfully to  your registered Email Address,please check...!",
+                    status: true,
+                    statusCode: 200,
+                });
             } else {
-                res
-                    .status(400)
-                    .json({
-                        mesage: "Something Went Wrong",
-                        status: false,
-                        statusCode: 400,
-                    });
+                res.status(400).json({
+                    mesage: "Something Went Wrong",
+                    status: false,
+                    statusCode: 400,
+                });
             }
         } else {
-            res
-                .status(401)
-                .json({
-                    message: "This Email is Not Found...please Try Again...!",
-                    status: false,
-                    statusCode: 401,
-                });
+            res.status(401).json({
+                message: "This Email is Not Found...please Try Again...!",
+                status: false,
+                statusCode: 401,
+            });
         }
     } catch (error) {
         console.log(error);
@@ -146,4 +141,25 @@ const forgotPassword = async (req, res) => {
     }
 };
 
-module.exports = { regUser, login, forgotPassword };
+
+
+const updatePassword = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const { password } = req.body
+        const hashpass = await hashpassword.hash(password)
+
+        const userData = await userModel.findByIdAndUpdate(id, { $set: { password: hashpass } }, { new: true });
+
+        if (userData) {
+            res.status(200).json({ message: "Password Updated Sucessfully...!", sttaus: true, statusCode: 200 })
+        } else {
+            res.status(400).json({ mesage: "Something Went wrong..!", status: false, statuCode: 400 })
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mesage: "Something Went wrong..!", status: false, statuCode: 500 })
+    }
+}
+module.exports = { regUser, login, forgotPassword, updatePassword };
