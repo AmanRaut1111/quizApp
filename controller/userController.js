@@ -108,7 +108,7 @@ const forgotPassword = async (req, res) => {
                 from: process.env.from,
                 to: findUser.email,
                 subject: "passsword update",
-                html: "<p>Click  below link  for update the password  <br><br> <link> http://localhost:3000/recoverpassword <link/> </p>",
+                html: "<p>Click  below the link for update password  <br><br> <link> http://localhost:3000/recoverpassword <link/> </p>",
             };
 
             const mailData = await transporter.sendMail(mailoption);
