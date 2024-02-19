@@ -6,7 +6,7 @@ const userRouter = express.Router();
 
 userRouter.post("/register", regUser);
 userRouter.post("/login", isValidToken, login);
-userRouter.post('/forgotPassword/:id', forgotPassword);
+userRouter.post('/forgotPassword/:id', isValidToken, forgotPassword);
 userRouter.put('/updatePassword/:id', isValidToken, updatePassword)
 
 module.exports = userRouter;
