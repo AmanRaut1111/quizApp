@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const hashpassword = require('../helpers/password')
 
+
+
 const regUser = async (req, res) => {
     try {
         const { userName, email, password, phoneNo } = req.body;
