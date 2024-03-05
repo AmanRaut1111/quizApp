@@ -98,7 +98,7 @@ const verifyOtp = async (req, res) => {
 
         console.log(check.otp);
         if (!(check.otp === otp)) {
-            return res.status(401).json({ message: "invalid Otp" });
+            return res.status(401).json({ message: "Invalid Otp" });
         } else {
             res.status(200).json({
                 message: "OTP verify sucessfully...!",
