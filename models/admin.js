@@ -18,6 +18,7 @@ const adminSchema = mongoose.Schema({
 
     otp: {
         type: String,
+        default: ""
     },
     otp_generated_at: {
         type: Date,
