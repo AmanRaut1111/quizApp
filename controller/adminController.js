@@ -14,6 +14,10 @@ const registerAdmin = async (req, res) => {
             phoneNo: phoneNo,
         });
 
+        const token = jwt.sign({ _id: adminData._id }, process.env.SECRET_KEY, {
+            expiresIn: process.env.expiresIn,
+        });
+
         const data = await adminData.save();
 
         if (data) {
@@ -22,6 +26,7 @@ const registerAdmin = async (req, res) => {
                 status: true,
                 statusCode: 200,
                 data: data,
+                token: token,
             });
         } else {
             res.status(400).json({
@@ -98,7 +103,9 @@ const verifyOtp = async (req, res) => {
 
         console.log(check.otp);
         if (!(check.otp === otp)) {
-            return res.status(401).json({ message: "Invalid Otp" });
+            return res
+                .status(401)
+                .json({ message: "Invalid Otp", status: false, statusCode: 401 });
         } else {
             res.status(200).json({
                 message: "OTP verify sucessfully...!",
@@ -152,9 +159,45 @@ const adminLogin = async (req, res) => {
     }
 };
 
+const updatePassword = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const { password } = req.body;
+
+        const hash = await passwordhelper.hash(password);
+        const data = await adminModel.findByIdAndUpdate(
+            { _id },
+            { $set: { password: hash } }
+        );
+        if (data) {
+            res.status(200).json({
+                message: "Password updated sucessfully...!",
+                status: true,
+                statusCode: 200,
+            });
+        } else {
+            res.status(400).json({
+                message: "Something Went  Wrong...!",
+                status: false,
+                statusCode: 400,
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something Went  Wrong...!",
+            status: false,
+            statusCode: 500,
+        });
+        console.log(error);
+    }
+};
+
 module.exports = {
     registerAdmin,
     adminLogin,
     verifyOtp,
     sendOtp,
+    updatePassword,
 };
+
+
